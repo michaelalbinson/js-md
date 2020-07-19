@@ -1,0 +1,28 @@
+{
+  "name": "js-md",
+  "version": "0.0.1-alpha",
+  "description": "No-dependency extensible markdown parser",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelalbinson/js-md.git"
+  },
+  "keywords": [
+    "markdown",
+    "javascript",
+    "node",
+    "node.js"
+  ],
+  "author": "michael.albinson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michaelalbinson/js-md/issues"
+  },
+  "homepage": "https://github.com/michaelalbinson/js-md#readme"
+}
