@@ -1,9 +1,10 @@
 'use strict';
 
 class Tokenizer {
-    CRLF = /\r\n/gi;
 
     constructor() {
+        this.CRLF = /\r\n/gi;
+
         this._tagStack = [];
         this._tokens = [];
         this._lineTokens = [];
