@@ -32,8 +32,7 @@ describe('RCustomEmojiLexer', () => {
 
         it('should not interpolate an entire sentence as an emoji', () => {
             const input = 'surprised-pikachu: this shouldn\'t work!';
-            const expected = 'surprised-pikachu: this shouldn\'t work!';
-            assertOutput(input, expected);
+            assertOutput(input, input);
         });
 
         it('should work for emoji with dashes', () => {

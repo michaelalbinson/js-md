@@ -32,8 +32,7 @@ describe('REmojiLexer', () => {
 
         it('should not interpolate an entire sentence as an emoji', () => {
             const input = 'smile: this shouldn\'t work!';
-            const expected = 'smile: this shouldn\'t work!';
-            assertOutput(input, expected);
+            assertOutput(input, input);
         });
 
         it('should work for emoji with dashes', () => {

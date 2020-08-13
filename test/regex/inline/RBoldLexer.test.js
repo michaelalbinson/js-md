@@ -62,14 +62,12 @@ describe('RBoldLexer', () => {
 
 		it('should not match mismatched starts and ends I', () => {
 			const input = 'This *is a clever** test';
-			const expected = 'This *is a clever** test';
-			assertOutput(input, expected);
+			assertOutput(input, input);
 		});
 
 		it('should not match mismatched starts and ends II', () => {
 			const input = 'This **is a clever* test';
-			const expected = 'This **is a clever* test';
-			assertOutput(input, expected);
+			assertOutput(input, input);
 		});
 	});
 });

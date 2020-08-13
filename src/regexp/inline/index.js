@@ -5,6 +5,7 @@ const RCodeLexer = require('./RCodeLexer');
 const RCustomEmojiLexer = require('./RCustomEmojiLexer');
 const REmojiLexer = require('./REmojiLexer');
 const RItalicLexer = require('./RItalicLexer');
+const RStrikethroughLexer = require('./RStrikethroughLexer');
 
 
 module.exports = {
@@ -13,6 +14,7 @@ module.exports = {
 	RCustomEmojiLexer,
 	REmojiLexer,
 	RItalicLexer,
-	defaults: [RCodeLexer, REmojiLexer, RCustomEmojiLexer, RBoldLexer, RItalicLexer],
-	vanilla: [RCodeLexer, RBoldLexer, RItalicLexer]
+	RStrikethroughLexer,
+	defaults: [RCodeLexer, REmojiLexer, RCustomEmojiLexer, RBoldLexer, RItalicLexer, RStrikethroughLexer],
+	vanilla: [RCodeLexer, RBoldLexer, RItalicLexer, RStrikethroughLexer]
 };

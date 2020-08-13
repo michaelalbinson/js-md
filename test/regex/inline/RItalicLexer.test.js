@@ -13,8 +13,10 @@ describe('RItalicLexer', () => {
 		};
 
 		it('should pass a simple smoke tests', () => {
-			assertOutput('*simple**', '<em>simple</em>');
-			assertOutput('_simple__', '<em>simple</em>');
+			assertOutput('*simple*', '<em>simple</em>');
+			assertOutput('_simple_', '<em>simple</em>');
+			assertOutput('*simple**', '<em>simple</em>*');
+			assertOutput('_simple__', '<em>simple</em>_');
 			assertOutput('simple', 'simple');
 		});
 
@@ -25,7 +27,7 @@ describe('RItalicLexer', () => {
 		});
 
 		it('should properly handle strings with whitespaces', () => {
-			const input = 'This **contains\nlots\tof\r\nweird whitespace** than a typical string';
+			const input = 'This **contains\nlots\tof\r\nweird whitespace* than a typical string';
 			const expected = 'This <em>contains\nlots\tof\r\nweird whitespace</em> than a typical string';
 			assertOutput(input, expected);
 		});

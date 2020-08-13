@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "webpack",
-    "test": "mocha ./test/**/*.test.js",
+    "test": "mocha ./test/**/**/*.test.js",
     "test:coverage": "nyc npm run test"
   },
   "repository": {
