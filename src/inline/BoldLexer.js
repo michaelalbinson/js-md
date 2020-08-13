@@ -16,7 +16,7 @@ class BoldLexer extends AInlineLexer {
     }
 
     /**
-     *
+     * Returns true if the first two characters are "**" or "__"
      * @param char {string}
      * @param lookahead {string}
      * @return {boolean}

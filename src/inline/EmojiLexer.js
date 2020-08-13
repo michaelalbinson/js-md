@@ -1,6 +1,7 @@
 'use strict';
 
 const AInlineLexer = require('./AInlineLexer');
+const emoji = require('./emoji');
 
 
 class EmojiLexer extends AInlineLexer {
@@ -17,12 +18,13 @@ class EmojiLexer extends AInlineLexer {
         while (text[idx]) {
             let char = text[idx];
             // hunt for the next colon
-            if (char === MDLexer.COLON) {
-                // if the
-                if (emojiName.length === 0)
+            if (char === EmojiLexer.COLON) {
+                // if the emoji name is empty, or the name is not present in the
+                // map of emoji names, bail
+                if (emojiName.length === 0 || !emoji[emojiName])
                     return { markup: '', continueIndex: startIndex };
                 else
-                    return { markup: EmojiLexer._getEmojiImageMarkup(emojiName), continueIndex: idx };
+                    return { markup: emoji[emojiName], continueIndex: idx };
             } else if (char === ' ' || char === '\n' || char === '\t' || char === '\r')
                 return { markup: '', continueIndex: startIndex };
 
@@ -41,10 +43,6 @@ class EmojiLexer extends AInlineLexer {
      */
     static isTrigger(char, lookahead) {
         return EmojiLexer.COLON === char;
-    }
-
-    static _getEmojiImageMarkup(named) {
-        return `<img src="/assets/emoji/${named}.png" alt="${named}" class="inline-emoji" title="${named}" />`;
     }
 }
 

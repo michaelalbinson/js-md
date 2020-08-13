@@ -5,8 +5,8 @@ class ASubLexer {
     /**
      *
      * @param text {string}
-     * @param startIndex {number}
-     * @param reLex {function}
+     * @param startIndex {number=}
+     * @param reLex {function=}
      * @return {{ markup: string|null, continueIndex: number }}
      */
     static lex(text, startIndex, reLex) {

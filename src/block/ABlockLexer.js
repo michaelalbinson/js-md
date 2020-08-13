@@ -3,14 +3,25 @@
 const ALexer = require('../ASubLexer');
 
 
+/**
+ * Block lexers
+ */
 class ABlockLexer extends ALexer {
     /**
      *
      * @param text {string}
-     * @param startIndex {number}
-     * @return {{ markup: string, continueIndex: number }}
+     * @return {string}
      */
-    static lex(text, startIndex) {
+    static lex(text) {
+        throw new Error('must be overridden');
+    }
+
+    /**
+     *
+     * @param char {string}
+     * @return {boolean}
+     */
+    static isTrigger(char) {
         throw new Error('must be overridden');
     }
 }

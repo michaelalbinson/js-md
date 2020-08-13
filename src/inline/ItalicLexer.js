@@ -16,7 +16,7 @@ class ItalicLexer extends AInlineLexer {
     }
 
     /**
-     *
+     * Returns true if the first character is "*" or "_"
      * @param char {string}
      * @param lookahead {string}
      * @return {boolean}

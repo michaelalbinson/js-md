@@ -1,25 +1,14 @@
 'use strict';
 
 class Tokenizer {
-
-    constructor() {
-        this.CRLF = /\r\n/gi;
-
-        this._tagStack = [];
-        this._tokens = [];
-        this._lineTokens = [];
-    }
-
     /**
      *
      * @param string {string}
+     * @return {[string]}
      */
-    tokenize(string) {
+    static tokenize(string) {
         const normalized = this._normalizeWhitespace(string.trim());
-        const rawLines = normalized.split('\n');
-        rawLines.forEach(line => {
-
-        })
+        return normalized.split(Tokenizer.NEW_LINE).map(line => line.trim());
     }
 
     /**
@@ -28,8 +17,8 @@ class Tokenizer {
      * @return {string}
      * @private
      */
-    _normalizeWhitespace(string) {
-        return string.replace(this.CRLF, '\n');
+    static _normalizeWhitespace(string) {
+        return string.replace(Tokenizer.CRLF, Tokenizer.NEW_LINE);
     }
 }
 
@@ -50,3 +39,9 @@ Tokenizer.SPECIAL_CHARACTERS = [
     // tabs also indicate line continuation
     '\t'
 ];
+
+Tokenizer.NEW_LINE = '\n';
+
+Tokenizer.CRLF = /\r\n/gi;
+
+module.exports = Tokenizer;
