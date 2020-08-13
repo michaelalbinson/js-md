@@ -85,3 +85,5 @@ class RLexer {
 		return text;
 	}
 }
+
+module.exports = RLexer;

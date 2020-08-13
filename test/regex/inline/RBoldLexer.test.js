@@ -1,16 +1,16 @@
 'use strict';
 
 const { describe, it } = require('mocha');
-const RBoldLexer = require('../../src/regexp/inline/RBoldLexer');
+const { expect } = require('chai');
+const RBoldLexer = require('../../../src/regexp/inline/RBoldLexer');
 
 
 describe('RBoldLexer', () => {
 	describe('#apply', () => {
 		const assertOutput = (input, expected) => {
 			const result = RBoldLexer.apply(input);
-			if (result !== expected)
-				throw new Error('failed, got: "' + result + '"\nExpected: "' + expected + '"');
-		}
+			expect(result).to.equal(expected);
+		};
 
 		it('should pass a simple smoke tests', () => {
 			assertOutput('**simple**', '<strong>simple</strong>');

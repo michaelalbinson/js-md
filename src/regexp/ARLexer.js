@@ -24,6 +24,9 @@ class ARLexer {
 	 */
 	static escapeHTMLEntities(str) {
 		return str.replace(/[\x26\x0A<>'"*_\[\]]/g, foundChar => {
+			if (foundChar in ARLexer.ENTITY_MAP)
+				return ARLexer.ENTITY_MAP[foundChar];
+
 			return "&#" + foundChar.charCodeAt(0) + ";"
 		});
 	}
@@ -34,10 +37,20 @@ class ARLexer {
 	static resetSharedState() {
 		ARLexer.SHARED_STATE = {
 			urls: [],
-			titles: []
+			titles: [],
+			emojiRoot: '/assets/emoji/'
 		};
 	}
 }
+
+ARLexer.ENTITY_MAP = {
+	'<': '&lt;',
+	'>': '&gt;',
+	' ': '&nbsp;',
+	'&': '&amp;',
+	'"': '&quot;',
+	'\'': '&apos;'
+};
 
 // initialize SHARED_STATE
 ARLexer.resetSharedState();

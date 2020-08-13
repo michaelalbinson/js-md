@@ -1,16 +1,16 @@
 'use strict';
 
 const { describe, it } = require('mocha');
-const RItalicLexer = require('../../src/regexp/inline/RItalicLexer');
+const { expect } = require('chai');
+const RItalicLexer = require('../../../src/regexp/inline/RItalicLexer');
 
 
 describe('RItalicLexer', () => {
 	describe('#apply', () => {
 		const assertOutput = (input, expected) => {
 			const result = RItalicLexer.apply(input);
-			if (result !== expected)
-				throw new Error('failed, got: "' + result + '"\nExpected: "' + expected + '"');
-		}
+			expect(result).to.equal(expected);
+		};
 
 		it('should pass a simple smoke tests', () => {
 			assertOutput('*simple**', '<em>simple</em>');
