@@ -13,7 +13,12 @@ describe('RBlockQuoteLexer', () => {
 
 		it('should successfully add blockquote tags', () => {
 			const input = '> simple\n';
-			const output = '<blockquote>\nsimple\n</blockquote>\n\n';
+			const output = `<blockquote>
+simple
+
+</blockquote>
+
+`;
 			assertOutput(input, output);
 		});
 
@@ -30,6 +35,7 @@ other text`;
 
 <blockquote>
 this is a quote!
+
 </blockquote>
 
 other text`;
@@ -48,12 +54,14 @@ other text
 			const output =
 `<blockquote>
 hello world
+
 </blockquote>
 
 other text
 
 <blockquote>
 this is a quote!
+
 </blockquote>
 
 `;
@@ -74,6 +82,7 @@ hello
 world
 there's a lot of text in this quote!
 which is neat
+
 </blockquote>
 
 `;
@@ -99,6 +108,7 @@ hello
 world
 there's a lot of text in this quote!
 which is neat
+
 </blockquote>
 
 Wasn't that good?`;
@@ -125,6 +135,7 @@ hello
 world
 there's a lot of text in this quote!
 which is neat
+
 </blockquote>
 
 Wasn't that good?`;

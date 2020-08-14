@@ -30,12 +30,6 @@ describe('RLinkLexer', () => {
 			assertOutput(input, expected);
 		});
 
-		it('should not match image magic tags', () => {
-			const input = '![simple image](https://cool.beans)';
-			const expected = '![simple image](https://cool.beans)';
-			assertOutput(input, expected);
-		});
-
 		it('should properly obfuscate email addresses in links', () => {
 			const FRAGGED_EMAIL_LINK_REGEX = /^<a href="((&#x\d+;)|(&#\d+;)|[a-z])+:(&#x\d+;)|((&#x\d+;)|(&#\d+;)|.)+">simple email address<\/a>$/gi;
 			const input = '[simple email address](test@cool.beans)';
@@ -45,7 +39,6 @@ describe('RLinkLexer', () => {
 		});
 
 		it('should properly obfuscate email addresses in link text', () => {
-			const FRAGGED_EMAIL_LINK_REGEX = /^<a href="((&#x\d+;)|(&#\d+;)|[a-z])+:(&#x\d+;)|((&#x\d+;)|(&#\d+;)|.)+">((&#x\d+;)|(&#\d+;)|[a-z])+:(&#x\d+;)|((&#x\d+;)|(&#\d+;)|.)+<\/a>$/gi;
 			const input = '[test@cool.beans](test@cool.beans)';
 			const result = RLinkLexer.apply(input);
 			expect(result.includes('test@cool.beans')).to.equal(false);
