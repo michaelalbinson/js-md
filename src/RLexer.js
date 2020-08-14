@@ -74,15 +74,29 @@ class RLexer {
 
 		text = Normalizer.normalize(text);
 
+		// convenience method to prevent worrying about `this` binding
+		const lexSpan = text => {
+			return this._lexSpan(text);
+		};
+
+		// lex all the blocks and allow them to lex spans individually
 		this._blockLexers.forEach(Lexer => {
-			text = Lexer.apply(text);
+			text = Lexer.apply(text, lexSpan);
 		});
 
+		return text;
+	}
+
+	_lexSpan(text) {
 		this._inlineLexers.forEach(Lexer => {
 			text = Lexer.apply(text);
 		});
 
 		return text;
+	}
+
+	static _lexBlocks(text) {
+
 	}
 }
 

@@ -37,9 +37,37 @@ class ARLexer {
 	static resetSharedState() {
 		ARLexer.SHARED_STATE = {
 			urls: [],
-			titles: [],
-			emojiRoot: '/assets/emoji/'
+			titleAnchors: [],
+			emojiRoot: '/assets/emoji/',
+			permitWordHashes: false,
+			hashPrefix: '--js-md-'
 		};
+	}
+
+	static getHash(str) {
+		let hash;
+		if (ARLexer.SHARED_STATE.permitWordHashes) {
+			hash = str.split(' ').join('-').toLowerCase();
+			if (ARLexer.SHARED_STATE.titleAnchors.includes(hash))
+				hash += 'i';
+		} else {
+			hash = 0;
+
+			let i, chr;
+			for (i = 0; i < str.length; i++) {
+				chr = str.charCodeAt(i);
+				hash = ((hash << 5) - hash) + chr;
+				hash |= 0; // Convert to 32bit integer
+			}
+
+			if (ARLexer.SHARED_STATE.titleAnchors.includes(hash))
+				hash += 'i';
+		}
+
+		ARLexer.SHARED_STATE.titleAnchors.push(hash);
+
+		// to prevent dom clobbering
+		return ARLexer.SHARED_STATE.hashPrefix + hash;
 	}
 }
 
