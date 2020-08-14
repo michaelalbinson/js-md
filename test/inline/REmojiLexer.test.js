@@ -2,13 +2,13 @@
 
 const { describe, it } = require('mocha');
 const { expect } = require('chai');
-const REmojiLexer = require('../../src/inline/REmojiLexer');
+const REmojiLexerTest = require('../../src/inline/REmojiLexer');
 
 
 describe('REmojiLexer', () => {
     describe('#apply', () => {
         const assertOutput = (input, expected) => {
-            const result = REmojiLexer.apply(input);
+            const result = REmojiLexerTest.apply(input);
             expect(result).to.equal(expected);
         };
 
@@ -38,6 +38,12 @@ describe('REmojiLexer', () => {
         it('should work for emoji with dashes', () => {
             const input = ':raised-eyebrow: this should work!';
             const expected = '🤨 this should work!';
+            assertOutput(input, expected);
+        });
+
+        it('should work for emoji with uppercase spellings', () => {
+            const input = ':SMiLE: this should work! :SMILE: :sMILe:';
+            const expected = '😄 this should work! 😄 😄';
             assertOutput(input, expected);
         });
     });

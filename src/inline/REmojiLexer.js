@@ -7,8 +7,9 @@ const emoji = require('./emoji');
 class REmojiLexer extends ARLexer {
     static apply(text) {
         return text.replace(/:([\w-]+?:)/gi, match => {
-            if (match.replace(/:/gi, '') in emoji)
-                return emoji[match.replace(/:/gi, '')];
+            const name = match.replace(/:/gi, '').toLowerCase();
+            if (name in emoji)
+                return emoji[name];
 
             return match;
         });
