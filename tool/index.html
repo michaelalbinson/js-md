@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Testing Grounds | js-md</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap4.css">
+
+    <script type="text/javascript" src="/lib/main.js"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
+    <style>
+        body {
+            margin: 5%;
+            background-color: #222;
+            color: white;
+
+        }
+
+        div#target {
+            border: solid black 1px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        blockquote {
+            border-left: solid lightgrey 5px;
+            border-radius: 5px;
+            padding-left: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 40rem;
+        }
+
+        pre {
+            color: lightgray;
+        }
+
+        p img.inline-emoji,
+        li img.inline-emoji,
+        img.inline-emoji {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        hr {
+            border-color: #005cbf;
+        }
+    </style>
+</head>
+<body>
+<noscript>You need to enable JavaScript to view this page</noscript>
+    <main>
+        <div>
+            <article>
+                <h1>The MarkDown Testing Grounds</h1>
+                <hr />
+                <div class="row">
+                    <div class="col">
+                        <h3><label for="input">Input</label></h3>
+                        <textarea id="input"></textarea>
+                    </div>
+                    <div class="col">
+                        <h3>Output</h3>
+                        <div id="target"></div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

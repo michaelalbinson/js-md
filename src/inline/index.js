@@ -1,26 +1,24 @@
 'use strict';
 
-const BoldLexer = require('./BoldLexer');
-const CustomEmojiLexer = require('./CustomEmojiLexer');
-const EmojiLexer = require('./EmojiLexer');
-const HRLexer = require('./HRLexer.js');
-const ItalicLexer = require('./ItalicLexer');
-const LinkLexer = require('./LinkLexer');
+const RBoldLexer = require('./RBoldLexer');
+const RCodeLexer = require('./RCodeLexer');
+const RCustomEmojiLexer = require('./RCustomEmojiLexer');
+const REmojiLexer = require('./REmojiLexer');
+const RImageLexer = require('./RImageLexer');
+const RItalicLexer = require('./RItalicLexer');
+const RLinkLexer = require('./RLinkLexer');
+const RStrikethroughLexer = require('./RStrikethroughLexer');
 
 
 module.exports = {
-    BoldLexer,
-    CustomEmojiLexer,
-    EmojiLexer,
-    HRLexer,
-    ItalicLexer,
-    LinkLexer,
-    defaults: [
-        BoldLexer,
-        CustomEmojiLexer,
-        EmojiLexer,
-        HRLexer,
-        ItalicLexer,
-        LinkLexer
-    ]
+	RBoldLexer,
+	RCodeLexer,
+	RCustomEmojiLexer,
+	REmojiLexer,
+	RItalicLexer,
+	RImageLexer,
+	RLinkLexer,
+	RStrikethroughLexer,
+	defaults: [RImageLexer, RLinkLexer, RCodeLexer, REmojiLexer, RCustomEmojiLexer, RBoldLexer, RItalicLexer, RStrikethroughLexer],
+	vanilla: [RImageLexer, RLinkLexer, RCodeLexer, RBoldLexer, RItalicLexer, RStrikethroughLexer]
 };

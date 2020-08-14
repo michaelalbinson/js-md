@@ -1,10 +1,10 @@
 'use strict';
 
-const ASubLexer = require('./ASubLexer');
-const Lexer = require('./Lexer');
+const ARLexer = require('./ARLexer');
+const MDLexer = require('./MDLexer');
 
 
 module.exports = {
-    ASubLexer,
-    Lexer
+    ARLexer,
+    MDLexer
 };
