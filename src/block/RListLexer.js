@@ -9,7 +9,7 @@ const ARLexer = require('../ARLexer');
 class RListLexer extends ARLexer {
 	static apply(text) {
 		// TODO
-		return text.replace(/^[=-]{3,}$/gim, match => {
+		return text.replace(/THIS WILL NEVER MATCH ANYTHING HAHAHA LOLOLOLOLOL/gim, match => {
 
 		});
 	}
