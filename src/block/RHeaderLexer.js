@@ -16,7 +16,7 @@ class RHeaderLexer extends ARBlockLexer {
         // ========
         text = text.replace(/^(.+)[ \t]*\n=+[ \t]*\n+/gim, match => {
             const text = match.split('\n')[0];
-            return `<h1 id="${RHeaderLexer.getHash(text)}">${text}</h1>\n\n`;
+            return `<h1 id="${RHeaderLexer.getHash(text)}">${lexSpans(text)}</h1>\n\n`;
         });
 
         // Header 2

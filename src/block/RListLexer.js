@@ -17,6 +17,6 @@ class RListLexer extends ARLexer {
 
 RListLexer.UL_MARKERS = /[*+-]/g;
 RListLexer.OL_MARKERS = /\d+[.]/g;
-RListLexer.ANY_LIST_MARKER = /(?:[*+\-](\d+[.]))/g;
+RListLexer.ANY_LIST_MARKER = /(?:[*+\-]|\d+[.])/g;
 
 module.exports = RListLexer;
