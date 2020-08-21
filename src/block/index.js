@@ -1,22 +1,26 @@
 'use strict';
 
 const ARBlockLexer = require('./ARBlockLexer');
+const ARListLexer = require('./ARListLexer');
 const RBlockQuoteLexer = require('./RBlockQuoteLexer');
 const RHeaderLexer = require('./RHeaderLexer');
 const RHRLexer = require('./RHRLexer');
-const RListLexer = require('./RListLexer');
+const ROrderedListLexer = require('./ROrderedListLexer');
 const RParagraphLexer = require('./RParagraphLexer');
 const RPreFormattedLexer = require('./RPreFormattedLexer');
+const RUnorderedListLexer = require('./RUnorderedListLexer');
 
 
 module.exports = {
 	ARBlockLexer,
 	RBlockQuoteLexer,
 	RHRLexer,
-	RListLexer,
+	ARListLexer,
+	ROrderedListLexer,
 	RHeaderLexer,
 	RParagraphLexer,
 	RPreFormattedLexer,
-	defaults: [RListLexer, RPreFormattedLexer, RBlockQuoteLexer, RHeaderLexer, RHRLexer, RParagraphLexer],
-	vanilla: [RListLexer, RPreFormattedLexer, RBlockQuoteLexer, RHeaderLexer, RParagraphLexer]
+	RUnorderedListLexer,
+	defaults: [ROrderedListLexer, RUnorderedListLexer, RPreFormattedLexer, RBlockQuoteLexer, RHeaderLexer, RHRLexer, RParagraphLexer],
+	vanilla: [ROrderedListLexer, RUnorderedListLexer, RPreFormattedLexer, RBlockQuoteLexer, RHeaderLexer, RParagraphLexer]
 };

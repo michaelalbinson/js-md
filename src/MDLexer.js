@@ -21,7 +21,7 @@ class MDLexer {
 			hashPrefix: options.hashPrefix,
 			emojiRoot: options.emojiRoot,
 			permitWordHashes: options.permitWordHashes
-		}
+		};
 
 		/**
 		 *
@@ -190,6 +190,6 @@ class MDLexer {
 MDLexer.MODES = {
 	VANILLA: 'vanilla',
 	DEFAULT: 'default'
-}
+};
 
 module.exports = MDLexer;

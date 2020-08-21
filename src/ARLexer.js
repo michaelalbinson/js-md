@@ -38,6 +38,7 @@ class ARLexer {
 		ARLexer.SHARED_STATE = {
 			urls: [],
 			titleAnchors: [],
+			listLevel: 0,
 			emojiRoot: (options && options.emojiRoot) || '/assets/emoji/',
 			permitWordHashes: (options && !!options.permitWordHashes) || false,
 			hashPrefix: (options && options.hashPrefix) || '--js-md-'

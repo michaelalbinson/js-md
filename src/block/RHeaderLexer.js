@@ -11,21 +11,6 @@ class RHeaderLexer extends ARBlockLexer {
      * @return {string}
      */
     static apply(text, lexSpans) {
-        // Setext-style headers:
-        // Header 1
-        // ========
-        text = text.replace(/^(.+)[ \t]*\n=+[ \t]*\n+/gim, match => {
-            const text = match.split('\n')[0];
-            return `<h1 id="${RHeaderLexer.getHash(text)}">${lexSpans(text)}</h1>\n\n`;
-        });
-
-        // Header 2
-        // --------
-        text = text.replace(/^(.+)[ \t]*\n-+[ \t]*\n+/gim, match => {
-            const text = match.split('\n')[0];
-            return `<h2 id="${RHeaderLexer.getHash(text)}">${lexSpans(text)}</h2>\n\n`;
-        });
-
         // atx-style headers:
         //	# Header 1
         //	## Header 2
@@ -36,6 +21,21 @@ class RHeaderLexer extends ARBlockLexer {
             const h_depth = match.match(/^#+/)[0].length;
             const text = match.replace(/#/g, '').trim();
             return `<h${h_depth} id="${RHeaderLexer.getHash(text)}">${lexSpans(text)}</h${h_depth}>\n\n`;
+        });
+
+        // Setext-style headers:
+        // Header 1
+        // ========
+        text = text.replace(/^(.+)[ \t]*\n={3,}[ \t]*\n+/gim, match => {
+            const text = match.split('\n')[0];
+            return `<h1 id="${RHeaderLexer.getHash(text)}">${lexSpans(text)}</h1>\n\n`;
+        });
+
+        // Header 2
+        // --------
+        text = text.replace(/^(.+)[ \t]*\n-{3,}[ \t]*\n+/gim, match => {
+            const text = match.split('\n')[0];
+            return `<h2 id="${RHeaderLexer.getHash(text)}">${lexSpans(text)}</h2>\n\n`;
         });
 
         return text;
