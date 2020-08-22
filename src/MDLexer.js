@@ -4,12 +4,20 @@ const RInlineLexers = require('./inline');
 const RBlockLexers = require('./block');
 const ARLexer = require('./ARLexer');
 const Normalizer = require('./Normalizer');
+const Safeguard = require('./Safeguard');
+const Sanitizer = require('./Sanitizer');
 
 
 class MDLexer {
 	/**
-	 *
-	 * @param options {{vanilla: boolean=, emojiRoot: string=, hashPrefix: string=, permitWordHashes: boolean=}=}
+	 * @param options {{
+	 * 		vanilla: boolean=,
+	 * 		emojiRoot: string=,
+	 * 		hashPrefix: string=,
+	 * 		permitWordHashes: boolean=,
+	 * 		failOnUnsafeTags: boolean=,
+	 * 		escapeUnsafeTags: boolean=
+	 * }=}
 	 */
 	constructor(options) {
 		if (!options)
@@ -20,18 +28,22 @@ class MDLexer {
 		this._options = {
 			hashPrefix: options.hashPrefix,
 			emojiRoot: options.emojiRoot,
-			permitWordHashes: options.permitWordHashes
+			permitWordHashes: options.permitWordHashes,
+
+			// default to false
+			failOnUnsafeTags: options.failOnUnsafeTags || false,
+
+			// default to true
+			escapeUnsafeTags: options.escapeUnsafeTags && true
 		};
 
 		/**
-		 *
 		 * @type {[ARLexer]}
 		 * @private
 		 */
 		this._inlineLexers = [];
 
 		/**
-		 *
 		 * @type {[ARLexer]}
 		 * @private
 		 */
@@ -40,7 +52,7 @@ class MDLexer {
 	}
 
 	/**
-	 *
+	 * Adds the given lexer class to the block lexers in use
 	 * @param lexerClass {ARLexer}
 	 */
 	addBlockLexer(lexerClass) {
@@ -48,7 +60,7 @@ class MDLexer {
 	}
 
 	/**
-	 *
+	 * Adds the given lexer class to the inline lexers in use
 	 * @param lexerClass {ARLexer}
 	 */
 	addInlineLexer(lexerClass) {
@@ -56,7 +68,7 @@ class MDLexer {
 	}
 
 	/**
-	 *
+	 * Add a lexer class to the given group of lexers
 	 * @param group {[ARLexer]}
 	 * @param lexer {ARLexer}
 	 * @private
@@ -69,7 +81,7 @@ class MDLexer {
 	}
 
 	/**
-	 *
+	 * Removes the given lexer class from the block lexers in use
 	 * @param lexerClass {ARLexer}
 	 */
 	removeBlockLexer(lexerClass) {
@@ -77,7 +89,7 @@ class MDLexer {
 	}
 
 	/**
-	 *
+	 * Removes the given lexer class from the inline lexers in use
 	 * @param lexerClass {ARLexer}
 	 */
 	removeInlineLexer(lexerClass) {
@@ -112,7 +124,7 @@ class MDLexer {
 	}
 
 	/**
-	 *
+	 * Get the current list of block lexers that will be used in parsing
 	 * @return {ARLexer[]}
 	 */
 	getBlockLexers() {
@@ -120,7 +132,7 @@ class MDLexer {
 	}
 
 	/**
-	 *
+	 * Get the current list of inline lexers that will be used in parsing
 	 * @return {ARLexer[]}
 	 */
 	getInlineLexers() {
@@ -128,7 +140,8 @@ class MDLexer {
 	}
 
 	/**
-	 * Set the mode of the lexer - 'vanilla' gives only bare minimum
+	 * Set the mode of the lexer - 'vanilla' gives only bare minimum (CommonMark) lexing support, default gives
+	 * extended syntax (similar to github flavored markdown)
 	 * @param mode {'vanilla'|'default'}
 	 */
 	setMode(mode) {
@@ -137,18 +150,27 @@ class MDLexer {
 	}
 
 	/**
-	 *
+	 * Normalize and parse a MarkDown input string - output parsed HTML
 	 * @param text
-	 * @return {string}
+	 * @return {string|null}
 	 */
 	lex(text) {
 		ARLexer.resetSharedState(this._options);
 		text = Normalizer.normalize(text);
-		return this._lexBlocks(text);
+
+		text = this._lexBlocks(text);
+
+		const hasUnsafeTags = Safeguard.defaultGuard(text);
+		if (hasUnsafeTags && this._options.failOnUnsafeTags)
+			throw new Error('Unsafe tags detected in parsed MarkDown - to bypass this check set failOnUnsafeTags to false');
+		else if (hasUnsafeTags && this._options.escapeUnsafeTags)
+			text = Sanitizer.sanitizeAll(text);
+
+		return text;
 	}
 
 	/**
-	 *
+	 * Call the inline lexers on the given text to parse any inline markdown
 	 * @param text {string}
 	 * @return {string}
 	 * @private
@@ -162,7 +184,7 @@ class MDLexer {
 	}
 
 	/**
-	 *
+	 * Call the block lexers on the text to parse any block-level markdown
 	 * @param text {string}
 	 * @return {string}
 	 * @private
@@ -176,9 +198,10 @@ class MDLexer {
 		// allow block lexers to recurse if needed
 		const recurseBlocks = text => {
 			return this._lexBlocks(text);
-		}
+		};
 
 		// lex all the blocks and allow them to lex spans individually
+
 		this._blockLexers.forEach(Lexer => {
 			text = Lexer.apply(text, lexSpan, recurseBlocks);
 		});
@@ -189,7 +212,10 @@ class MDLexer {
 
 MDLexer.MODES = {
 	VANILLA: 'vanilla',
-	DEFAULT: 'default'
+	DEFAULT: 'default',
+
+	// experimental - maybe will support... someday... tables are hard
+	GFM: 'gfm'
 };
 
 module.exports = MDLexer;

@@ -7,7 +7,7 @@ const Sanitizer = require('../src/Sanitizer');
 
 describe('Sanitizer', () => {
 	/**
-	 *
+	 * Take a transform and assert that it escapes the leading "<"
 	 * @param transform {function}
 	 * @param tagList {object}
 	 */
@@ -19,7 +19,7 @@ describe('Sanitizer', () => {
 	};
 
 	/**
-	 *
+	 * Take a transform and assert that it does not escape the leading "<"
 	 * @param transform {function}
 	 * @param tagList {object}
 	 */
@@ -61,5 +61,23 @@ describe('Sanitizer', () => {
 			assertTagListNotEscaped(Sanitizer.sanitizeExtended, Sanitizer.ILLEGAL_TAGS);
 			assertTagListNotEscaped(Sanitizer.sanitizeExtended, ['div', 'li', 'ul', 'ol', 'section', 'document', 'strong', 'em', 'del'])
 		});
+	});
+
+	describe('#sanitizeInlineJavascript', () => {
+		it('should sanitize the following', () => {
+			expect(Sanitizer.sanitizeInlineJavascript('<a href="javascript:alert(1)">Interior javascript text</a>'))
+				.to.equal('<a href="alert(1)">Interior javascript text</a>');
+
+			expect(Sanitizer.sanitizeInlineJavascript('<iframe src="javascript:alert(1)" />'))
+				.to.equal('<iframe src="alert(1)" />');
+		});
+
+		it('should ignore the following javascript mentions', () => {
+			const in1 = "Javascript: it's a cool tool!";
+			expect(Sanitizer.sanitizeInlineJavascript(in1)).to.equal(in1);
+
+			const in2 = "evil=javascript: trust me";
+			expect(Sanitizer.sanitizeInlineJavascript(in2)).to.equal(in2);
+		})
 	});
 });

@@ -24,6 +24,18 @@ describe('RHRLexer', () => {
 			assertOutput(input, expected);
 		});
 
+		it('should parse three or more asterisks', () => {
+			const input = '***';
+			const expected = '<hr />';
+			assertOutput(input, expected);
+			assertOutput("*****************", expected);
+		});
+
+		it('should ignore asterisks that would otherwise be emphasis markers', () => {
+			assertOutput("This is ***bold with emphasis***", "This is ***bold with emphasis***");
+			assertOutput("***This is also bold with emphasis***", "***This is also bold with emphasis***");
+		});
+
 		it('should allow more than three dashes and still resolve properly', () => {
 			const input = '---------------';
 			const expected = '<hr />';

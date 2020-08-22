@@ -180,5 +180,9 @@ describe('MDLexer', () => {
             const out = new MDLexer().lex('hello world');
             expect(out).to.equal('<p>hello world</p>');
         });
+
+        it('should fail if unsafe tags are detected and failOnUnsafeTags is true', () => {
+
+        });
     });
 });

@@ -35,6 +35,21 @@ class Sanitizer extends Safeguard {
 	/**
 	 *
 	 * @param text {string}
+	 * @return {string}
+	 */
+	static sanitizeInlineJavascript(text) {
+		text = text.replace(/href=["']?javascript:/gi, match => {
+			return match.replace('javascript:', '');
+		});
+
+		return text.replace(/src=["']?javascript:/gi, match => {
+			return match.replace('javascript:', '');
+		});
+	}
+
+	/**
+	 *
+	 * @param text {string}
 	 * @param tagList {object}
 	 * @return {string}
 	 * @private

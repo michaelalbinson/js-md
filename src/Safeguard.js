@@ -29,9 +29,9 @@ class Safeguard {
 	 * @return {boolean}
 	 */
 	static defaultGuard(text) {
-		return this.containsIllegalTags(text) ||
-			this.containsExtendedIllegalTags(text) ||
-			this.containsInlineJavascript(text);
+		return Safeguard.containsIllegalTags(text) ||
+			Safeguard.containsExtendedIllegalTags(text) ||
+			Safeguard.containsInlineJavascript(text);
 	}
 
 	/**
@@ -40,8 +40,8 @@ class Safeguard {
 	 * @return {boolean}
 	 */
 	static containsInlineJavascript(text) {
-		return Safeguard._hasRegexpMatch(text, new RegExp('src="javascript:', 'gi')) ||
-			Safeguard._hasRegexpMatch(text, new RegExp('href="javscript:', 'gi'));
+		return Safeguard._hasRegexpMatch(text, /src=["']?javascript:/gi) ||
+			Safeguard._hasRegexpMatch(text, /href=["']?javascript:/gi);
 	}
 
 	/**
@@ -91,7 +91,7 @@ class Safeguard {
 	 */
 	static _hasRegexpMatch(text, search) {
 		const matches = text.match(search);
-		return matches && matches.length > 0;
+		return matches ? matches.length > 0 : false;
 	}
 }
 
@@ -99,7 +99,7 @@ Safeguard.TASKS = {
 	inlineJS: Safeguard.containsInlineJavascript,
 	illegalTags: Safeguard.containsIllegalTags,
 	extendedIllegalTags: Safeguard.containsExtendedIllegalTags
-}
+};
 
 // tags that are prohibited in the
 Safeguard.ILLEGAL_TAGS = {
@@ -112,12 +112,12 @@ Safeguard.ILLEGAL_TAGS = {
 	NOFRAMES: 'noframes',
 	SCRIPT: 'script',
 	PLAINTEXT: 'plaintext'
-}
+};
 
 Safeguard.EXTENDED_ILLEGAL_TAGS = {
 	BUTTON: 'button',
 	INPUT: 'input',
 	FORM: 'form'
-}
+};
 
 module.exports = Safeguard;
