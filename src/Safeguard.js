@@ -3,7 +3,7 @@
 
 /**
  * Contains a series of tests for things that must NEVER be allowed in outputted markup as it could allow for
- * severe security vulnerablites should someone insert scripts or arbitrary javascript
+ * severe security vulnerabilities should someone insert scripts or arbitrary javascript
  */
 class Safeguard {
 	/**
@@ -14,7 +14,7 @@ class Safeguard {
 	 */
 	static customGuard(text, guards) {
 		// undefined options or empty options, or the all option means use the default (most restrictive) guard
-		if (!options || guards.length === 0)
+		if (guards.length === 0)
 			return this.defaultGuard(text);
 
 		// reduce down all the guards and if any return true, return true
@@ -29,87 +29,95 @@ class Safeguard {
 	 * @return {boolean}
 	 */
 	static defaultGuard(text) {
-		return this.containsScriptTags(text) ||
-			this.containsButtonMarkup(text) ||
-			this.containsStyleTags(text) ||
-			this.containsFormMarkup(text) ||
-			this.containsInputMarkup(text) ||
-			this.containsInlineJavascript(text) ||
-			this.containsIframeMarkup(text);
+		return this.containsIllegalTags(text) ||
+			this.containsExtendedIllegalTags(text) ||
+			this.containsInlineJavascript(text);
 	}
 
 	/**
-	 * Detects attacks such as
-	 * @param text {string}
-	 * @return {boolean}
-	 */
-	static containsScriptTags(text) {
-		return text.includes('<script')
-	}
-
-	/**
-	 * Detects attacks such as
-	 * @param text {string}
-	 * @return {boolean}
-	 */
-	static containsStyleTags(text) {
-		return text.includes('<style');
-	}
-
-	/**
-	 * Detects attacks such as
-	 * @param text {string}
-	 * @return {boolean}
-	 */
-	static containsButtonMarkup(text) {
-		return text.includes('<button');
-	}
-
-	/**
-	 * Detects attacks such as
-	 * @param text {string}
-	 * @return {boolean}
-	 */
-	static containsInputMarkup(text) {
-		return text.includes('<input');
-	}
-
-	/**
-	 * Detects attacks such as
-	 * @param text {string}
-	 * @return {boolean}
-	 */
-	static containsFormMarkup(text) {
-		return text.includes('<form');
-	}
-
-	/**
-	 * Detects attacks such as <a href=""
+	 * Detects attacks using links to execute javascript such as `<a href="javascript:alert('hello')"`
 	 * @param text {string}
 	 * @return {boolean}
 	 */
 	static containsInlineJavascript(text) {
-		return text.includes('src="javascript:') || text.includes('href="javscript:');
+		return Safeguard._hasRegexpMatch(text, new RegExp('src="javascript:', 'gi')) ||
+			Safeguard._hasRegexpMatch(text, new RegExp('href="javscript:', 'gi'));
 	}
 
 	/**
-	 * Detects attacks such as <a href=""
-	 * @param text {string}
+	 *
+	 * @param text{string}
 	 * @return {boolean}
 	 */
-	static containsIframeMarkup(text) {
-		return text.includes('<iframe');
+	static containsIllegalTags(text) {
+		return Safeguard._containsTags(text, Safeguard.ILLEGAL_TAGS)
+	}
+
+	/**
+	 *
+	 * @param text{string}
+	 * @return {boolean}
+	 */
+	static containsExtendedIllegalTags(text) {
+		return Safeguard._containsTags(text, Safeguard.EXTENDED_ILLEGAL_TAGS);
+	}
+
+	/**
+	 *
+	 * @param text {string}
+	 * @param tagList {object}
+	 * @return {boolean}
+	 * @private
+	 */
+	static _containsTags(text, tagList) {
+		for (let tag in tagList) {
+			if (!tagList.hasOwnProperty(tag))
+				continue;
+
+			// do a global case-insensitive search for the opening tag
+			const tagName = tagList[tag];
+			if (Safeguard._hasRegexpMatch(text, new RegExp(`<${tagName}`, 'gi')))
+				return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 *
+	 * @param text {string}
+	 * @param search {RegExp}
+	 * @return {boolean}
+	 */
+	static _hasRegexpMatch(text, search) {
+		const matches = text.match(search);
+		return matches && matches.length > 0;
 	}
 }
 
 Safeguard.TASKS = {
-	iframes: Safeguard.containsIframeMarkup,
 	inlineJS: Safeguard.containsInlineJavascript,
-	inputs: Safeguard.containsInputMarkup,
-	forms: Safeguard.containsFormMarkup,
-	styles: Safeguard.containsStyleTags,
-	buttons: Safeguard.containsButtonMarkup,
-	scripts: Safeguard.containsScriptTags
+	illegalTags: Safeguard.containsIllegalTags,
+	extendedIllegalTags: Safeguard.containsExtendedIllegalTags
+}
+
+// tags that are prohibited in the
+Safeguard.ILLEGAL_TAGS = {
+	TITLE: 'title',
+	TEXTAREA: 'textarea',
+	STYLE: 'style',
+	XMP: 'xmp',
+	IFRAME: 'iframe',
+	NOEMBED: 'noembed',
+	NOFRAMES: 'noframes',
+	SCRIPT: 'script',
+	PLAINTEXT: 'plaintext'
+}
+
+Safeguard.EXTENDED_ILLEGAL_TAGS = {
+	BUTTON: 'button',
+	INPUT: 'input',
+	FORM: 'form'
 }
 
 module.exports = Safeguard;
