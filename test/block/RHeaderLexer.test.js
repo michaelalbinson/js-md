@@ -17,32 +17,32 @@ describe('RHeaderLexer', () => {
 
         it('should parse equals sign Setext headers', () => {
             const input = 'Test 123\n===\n';
-            const expected = '<h1 id="--js-md--1083745852">Test 123</h1>\n\n';
+            const expected = '<h1 id="--js-md--1083745852">Test 123</h1>\n';
             assertOutput(input, expected);
         });
 
         it('should parse dashed Setext headers', () => {
             const input = 'Test 123\n---\n';
-            const expected = '<h2 id="--js-md--1083745852">Test 123</h2>\n\n';
+            const expected = '<h2 id="--js-md--1083745852">Test 123</h2>\n';
             assertOutput(input, expected);
         });
 
         it('should allow more than 3 dashes and still parse header headers', () => {
             const input = 'Test 123\n-----------------\n';
-            const expected = '<h2 id="--js-md--1083745852">Test 123</h2>\n\n';
+            const expected = '<h2 id="--js-md--1083745852">Test 123</h2>\n';
             assertOutput(input, expected);
         });
 
         it('should parse two headers at the same time', () => {
             const input = 'test\n======\n\nMuch better\n---\n\n';
-            const expected = "<h1 id=\"--js-md-3556498\">test</h1>\n\n<h2 id=\"--js-md-1108587843\">Much better</h2>\n\n";
+            const expected = "<h1 id=\"--js-md-3556498\">test</h1>\n<h2 id=\"--js-md-1108587843\">Much better</h2>\n";
             assertOutput(input, expected);
         });
 
         it('should parse atx-style headers', () => {
             const assertProperOutput = test => {
                 RHeaderLexer.resetSharedState();
-                const expected = '<h2 id="--js-md--1083745852">Test 123</h2>\n\n';
+                const expected = '<h2 id="--js-md--1083745852">Test 123</h2>\n';
                 assertOutput(test, expected);
             };
 
@@ -61,9 +61,7 @@ Test 2
 ------
 `;
             const output = `<h1 id="--js-md--1793304509">Test 1</h1>
-
 <h2 id="--js-md--1793304508">Test 2</h2>
-
 `;
 
             assertOutput(input, output);
@@ -79,17 +77,11 @@ Test 2
                 '###### foo\n';
 
             const output = '<h1 id="--js-md-101574">foo</h1>\n' +
-                '\n' +
                 '<h2 id="--js-md-101574i">foo</h2>\n' +
-                '\n' +
                 '<h3 id="--js-md-101574i">foo</h3>\n' +
-                '\n' +
                 '<h4 id="--js-md-101574i">foo</h4>\n' +
-                '\n' +
                 '<h5 id="--js-md-101574i">foo</h5>\n' +
-                '\n' +
-                '<h6 id="--js-md-101574i">foo</h6>\n' +
-                '\n';
+                '<h6 id="--js-md-101574i">foo</h6>\n';
 
             assertOutput(input, output);
         });
