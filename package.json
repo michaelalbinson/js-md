@@ -10,7 +10,7 @@
     "build": "webpack",
     "test": "mocha ./test/ --recursive",
     "test:coverage": "nyc npm run test",
-    "dev-server": "node ./tool/index.js"
+    "dev-server": "node dev-server/index.js"
   },
   "repository": {
     "type": "git",
