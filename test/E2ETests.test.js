@@ -22,7 +22,6 @@ describe('E2E Lexing Tests', () => {
 Hello ~there's a code block in here~
 `;
 		const output = `<h2 id="--js-md-1098432783">But it <del>does</del> not?</h2>
-
 <p>Hello <del>there's a code block in here</del></p>`;
 
 		const out = new MDLexer().lex(input);
@@ -37,7 +36,6 @@ Hello ~there's a code block in here~
 `;
 		const output = `<blockquote>
 <p>you go bud</p>
-
 <blockquote>
 <p>nested blocks</p>
 </blockquote>

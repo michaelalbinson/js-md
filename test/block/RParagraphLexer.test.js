@@ -13,7 +13,7 @@ describe('RParagraphLexer', () => {
 
 		it('should wrap the text in a p tag', () => {
 			const input = 'simple test';
-			const expected = '<p>simple test</p>'
+			const expected = '<p>simple test</p>';
 			assertOutput(input, expected);
 		});
 
@@ -30,7 +30,6 @@ simple test 2`;
 
 			const expected =
 `<p>simple test</p>
-
 <p>simple test 2</p>`;
 
 			assertOutput(input, expected);
@@ -48,14 +47,21 @@ it'd be cool if this **just worked**`;
 
 			const expected =
 `<p>simple test</p>
-
 <h1>nice</h1>
-
 <p>simple test 2</p>
-
 <p>it'd be cool if this **just worked**</p>`;
 
 			assertOutput(input, expected);
 		});
+
+		it('should parse line continuations', () => {
+			const input = 'hello world' +
+				'this is a long hard wrapped paragraph';
+
+			const expected = '<p>hello world' +
+				'this is a long hard wrapped paragraph</p>';
+
+			assertOutput(input, expected);
+		})
 	});
 });

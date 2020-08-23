@@ -9,7 +9,7 @@ class RParagraphLexer extends ARBlockLexer {
 		text = text.trim();
 
 		// split the remaining tags
-		const blocks = text.split(/\n{2,}/g);
+		const blocks = text.split(/\n+/g);
 		return blocks.map(block => {
 			// if a block already begins with an HTML tag, don't apply
 			// a paragraph around it
@@ -19,7 +19,7 @@ class RParagraphLexer extends ARBlockLexer {
 
 			block = block.trim();
 			return `<p>${lexSpan(block)}</p>`
-		}).join('\n\n');
+		}).join('\n');
 	}
 }
 
