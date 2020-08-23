@@ -11,14 +11,16 @@ class RUnorderedListLexer extends ARListLexer {
      * @return {RegExp}
      */
     static getListRegexp() {
-        return /^([ ]{0,3}([*+\-])(?:.+?))(.*\n+)+(?![ \t]*(?:[*+\-])[ \t]+)/gim;
+        return /^([ ]{0,3}[*+-][ \t]((?:.+)\n\n?)+)+/gim;
+        // return /^([ ]{0,3}([*+\-])(?:.+?))(.*\n+)+(?![ \t]*(?:[*+\-])[ \t]+)/gim;
     }
 
     /**
      * @return {RegExp}
      */
     static getListItemRegexp() {
-        return /[\n]?(^[ \t]*)(?:([*+\-]))[ \t]+((.+?)(\n{1,2}))+(?=\n*(\z|\2(?:[*+\-])[ \t]+)?)/gm;
+        return /^[ ]{0,3}[*+-][ \t](.+\n?(?!^[ ]{0,3}[*+-]))+/gim;
+        // return /\n?(^[ \t]*)(?:([*+-]))[ \t]+([\w \t]*\n{1,2})+(?=\n{0,2}(\z|\2(?:[*+\-])[ \t]+)?)/gim;
     }
 
     /**

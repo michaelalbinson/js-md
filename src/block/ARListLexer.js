@@ -11,12 +11,12 @@ class ARListLexer extends ARBlockLexer {
         if (ARListLexer.SHARED_STATE.listLevel > 0) {
             return text.replace(ARListLexer.LIST_MATCHER, match => {
                 match = match.replace(/\n{2,}/g, '\n\n\n');
-                return `<${this.getTagName()}>\n${this._processListItems(match, lexBlocks)}</${this.getTagName()}>`;
+                return `<${this.getTagName()}>\n${this._processListItems(match, lexBlocks)}</${this.getTagName()}>\n`;
             });
         } else {
             return text.replace(this.getListRegexp(), match => {
                 match = match.replace(/\n{2,}/g, '\n\n\n');
-                return `<${this.getTagName()}>\n${this._processListItems(match, lexBlocks)}</${this.getTagName()}>`;
+                return `<${this.getTagName()}>\n${this._processListItems(match, lexBlocks)}</${this.getTagName()}>\n`;
             });
         }
     }

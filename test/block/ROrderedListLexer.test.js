@@ -2,65 +2,65 @@
 
 const { describe, it } = require('mocha');
 const { expect } = require('chai');
-const RUnorderedListLexer = require('../../src/block/RUnorderedListLexer');
+const ROrderedListLexer = require('../../src/block/ROrderedListLexer');
 
 
-describe('RUnorderedListLexer', () => {
+describe('ROrderedListLexer', () => {
     describe('#apply', () => {
         const assertOutput = (input, expected) => {
-            const result = RUnorderedListLexer.apply(input, text => text, text => text);
+            const result = ROrderedListLexer.apply(input, text => text, text => text);
             expect(result).to.equal(expected);
         };
 
         it('should parse a single list item', () => {
-            const input = '- test 123\n\n';
-            const expected = `<ul>
+            const input = '1. test 123\n\n';
+            const expected = `<ol>
 <li>test 123</li>
 
 
-</ul>
+</ol>
 `;
             assertOutput(input, expected);
         });
 
         it('should parse a multiple line list item', () => {
-            const input = '- test 123\nthis is a line continuation\nbecause I have lots of things to say\n';
-            const expected = `<ul>
+            const input = '2. test 123\nthis is a line continuation\nbecause I have lots of things to say\n';
+            const expected = `<ol>
 <li>test 123
 this is a line continuation
 because I have lots of things to say</li>
-</ul>
+</ol>
 `;
             assertOutput(input, expected);
         });
 
         it('should parse a multiple list items with mixed markers', () => {
-            const input = `- test 123
-* hello
+            const input = `4. test 123
+4) hello
 `;
 
-            const expected = `<ul>
+            const expected = `<ol>
 <li>test 123</li>
 
 <li>hello</li>
-</ul>
+</ol>
 `;
             assertOutput(input, expected);
         });
 
         it('should allow multiline and single line list items', () => {
             const input =
-`- test 123
+                `1. test 123
 Cool! maybe this will work!
-* hello
+2. hello
 `;
 
-            const output = `<ul>
+            const output = `<ol>
 <li>test 123
 Cool! maybe this will work!</li>
 
 <li>hello</li>
-</ul>
+</ol>
 `;
 
             assertOutput(input, output);
@@ -68,11 +68,11 @@ Cool! maybe this will work!</li>
 
         it('should ignore text preceeding and proceeding the list', () => {
             const input =
-`
+                `
 There is a paragraph before the list
 it's pretty long!
 
-- test 123
+1. test 123
 Cool! maybe this will work!
 
 
@@ -82,16 +82,16 @@ one line!
 `;
 
             const output =
-`
+                `
 There is a paragraph before the list
 it's pretty long!
 
-<ul>
+<ol>
 <li>test 123
 Cool! maybe this will work!</li>
 
 
-</ul>
+</ol>
 
 There's also a paragraph following the list!
 It also has more than
@@ -103,12 +103,12 @@ one line!
 
         it('should allow sub-markdown', () => {
             const input =
-`
+                `
 There is a paragraph before the list
 it's pretty long!
 
-- test 123
-Cool! maybe this will work! **There's other markdown in here! It could be - interpreted as a list!**
+2. test 123
+Cool! maybe this will work! **There's other markdown in here! It could be 4) interpreted as a list!**
 
 
 There's also a paragraph following the list!
@@ -117,16 +117,16 @@ one line!
 `;
 
             const output =
-`
+                `
 There is a paragraph before the list
 it's pretty long!
 
-<ul>
+<ol>
 <li>test 123
-Cool! maybe this will work! **There's other markdown in here! It could be - interpreted as a list!**</li>
+Cool! maybe this will work! **There's other markdown in here! It could be 4) interpreted as a list!**</li>
 
 
-</ul>
+</ol>
 
 There's also a paragraph following the list!
 It also has more than
@@ -144,20 +144,20 @@ one line!
 
         it('should allow a list continuation', () => {
             const input = `
-- Interesting
+1. Interesting
 unfortunately this ends the list?
 
-- test 2
+3. test 2
 `;
 
             const output = `
-<ul>
+<ol>
 <li>Interesting
 unfortunately this ends the list?</li>
 
 
 <li>test 2</li>
-</ul>
+</ol>
 `;
 
             assertOutput(input, output);

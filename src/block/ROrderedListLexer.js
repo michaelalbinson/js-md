@@ -11,21 +11,21 @@ class ROrderedListLexer extends ARListLexer {
      * @return {RegExp}
      */
     static getListRegexp() {
-        return /^([ ]{0,3}(\d+[.])(?:.+?))(.*\n+)+(?![ \t]*(?:\d+[.])[ \t]+)/gim;
+        return /^([ ]{0,3}\d+[.)][ \t]((?:.+)\n\n?)+)+/gim;
     }
 
     /**
      * @return {RegExp}
      */
     static getListItemRegexp() {
-        return /[\n]?(^[ \t]*)(?:(\d+[.]))[ \t]+((.+?)(\n{1,2}))+(?=\n*(\z|\2(?:\d+[.])[ \t]+)?)/gm;
+        return /^[ ]{0,3}\d+[.)][ \t](.+\n?(?!^[ ]{0,3}\d+[.)]))+/gim;
     }
 
     /**
      * @return {RegExp}
      */
     static getListItemPrefixReplacer() {
-        return /\d+[.]/g;
+        return /^[ ]{0,3}\d+[.)]/gm;
     }
 
     /**

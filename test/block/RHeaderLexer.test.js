@@ -33,6 +33,12 @@ describe('RHeaderLexer', () => {
             assertOutput(input, expected);
         });
 
+        it('should parse two headers at the same time', () => {
+            const input = 'test\n======\n\nMuch better\n---\n\n';
+            const expected = "<h1 id=\"--js-md-3556498\">test</h1>\n\n<h2 id=\"--js-md-1108587843\">Much better</h2>\n\n";
+            assertOutput(input, expected);
+        });
+
         it('should parse atx-style headers', () => {
             const assertProperOutput = test => {
                 RHeaderLexer.resetSharedState();
