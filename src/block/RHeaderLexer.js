@@ -17,7 +17,7 @@ class RHeaderLexer extends ARBlockLexer {
         //	## Header 2 with closing hashes ##
         //	...
         //	###### Header 6
-        text = text.replace(/^(#{1,6})[ \t]*(.+?)[ \t]*#*\n+/gim, match => {
+        text = text.replace(/^(#{1,6})[ \t]+(.+?)[ \t]*#*\n+/gim, match => {
             const h_depth = match.match(/^#+/)[0].length;
             const text = match.replace(/#/g, '').trim();
             return `<h${h_depth} id="${RHeaderLexer.getHash(text)}">${lexSpans(text)}</h${h_depth}>\n\n`;

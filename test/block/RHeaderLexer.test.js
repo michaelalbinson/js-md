@@ -68,5 +68,30 @@ Test 2
 
             assertOutput(input, output);
         });
+
+        it('should parse ATX headers as in the examples:', () => {
+            // example 32
+            const input = '# foo\n' +
+                '## foo\n' +
+                '### foo\n' +
+                '#### foo\n' +
+                '##### foo\n' +
+                '###### foo\n';
+
+            const output = '<h1 id="--js-md-101574">foo</h1>\n' +
+                '\n' +
+                '<h2 id="--js-md-101574i">foo</h2>\n' +
+                '\n' +
+                '<h3 id="--js-md-101574i">foo</h3>\n' +
+                '\n' +
+                '<h4 id="--js-md-101574i">foo</h4>\n' +
+                '\n' +
+                '<h5 id="--js-md-101574i">foo</h5>\n' +
+                '\n' +
+                '<h6 id="--js-md-101574i">foo</h6>\n' +
+                '\n';
+
+            assertOutput(input, output);
+        });
     });
 });
