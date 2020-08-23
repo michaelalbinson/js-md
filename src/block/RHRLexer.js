@@ -8,7 +8,9 @@ const ARLexer = require('../ARLexer');
  */
 class RHRLexer extends ARLexer {
 	static apply(text) {
-		return text.replace(/^[=\-*]{3,}$/gim, '<hr />');
+		text = text.replace(/^[ ]{0,3}[*]{3,}[ ]*$/gim, '<hr />');
+		text = text.replace(/^[ ]{0,3}[_]{3,}[ ]*$/gim, '<hr />');
+		return text.replace(/^[ ]{0,3}[-]{3,}[ ]*$/gim, '<hr />');
 	}
 }
 

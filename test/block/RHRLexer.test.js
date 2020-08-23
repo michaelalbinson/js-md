@@ -13,7 +13,7 @@ describe('RHRLexer', () => {
 		};
 
 		it('should parse equals sign Setext headers', () => {
-			const input = '===';
+			const input = '___';
 			const expected = '<hr />';
 			assertOutput(input, expected);
 		});
@@ -47,5 +47,35 @@ describe('RHRLexer', () => {
 			const expected = 'Hello there!\n\n<hr />\n\nNice';
 			assertOutput(input, expected);
 		});
+
+		it('should allow spaces', () => {
+			assertOutput(' - ---- ------ --- -', '<hr />');
+			assertOutput(' *  *** ** **** ', '<hr />');
+			assertOutput('  __ ____ ____ _ ', '<hr />');
+
+			// example 21
+			assertOutput(' - - -', '<hr />');
+
+			// example 22
+			assertOutput(' **  * ** * ** * **', '<hr />');
+
+			// example 23
+			assertOutput('-     -      -      -', '<hr />');
+
+			// example 24
+			assertOutput('- - - -    ', '<hr />');
+		});
+
+		it('should ignore the line if any other characters are present', () => {
+			// example 25
+			assertOutput('_ _ _ _ a', '_ _ _ _ a');
+			assertOutput('a------', 'a------');
+			assertOutput('---a---', '---a---');
+		});
+
+		it('should ignore non-matched whitespace characters', () => {
+			// example 26
+			assertOutput(' *-*', ' *-*');
+		})
 	});
 });

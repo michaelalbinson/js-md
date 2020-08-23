@@ -21,6 +21,6 @@ module.exports = {
 	RParagraphLexer,
 	RPreFormattedLexer,
 	RUnorderedListLexer,
-	defaults: [ROrderedListLexer, RUnorderedListLexer, RPreFormattedLexer, RBlockQuoteLexer, RHeaderLexer, RHRLexer, RParagraphLexer],
-	vanilla: [ROrderedListLexer, RUnorderedListLexer, RPreFormattedLexer, RBlockQuoteLexer, RHeaderLexer, RParagraphLexer]
+	defaults: [RHeaderLexer, ROrderedListLexer, RUnorderedListLexer, RPreFormattedLexer, RBlockQuoteLexer, RHRLexer, RParagraphLexer],
+	vanilla: [RHeaderLexer, ROrderedListLexer, RUnorderedListLexer, RPreFormattedLexer, RBlockQuoteLexer, RParagraphLexer]
 };
