@@ -1,5 +1,7 @@
 'use strict';
 
+const MODES = require('./Modes');
+
 
 class ARLexer {
 	/**
@@ -32,10 +34,11 @@ class ARLexer {
 
 	/**
 	 * Resets the shared state that all lexers can access to store state if they aren't stateless
-	 * @param options {{emojiRoot: string=, hashPrefix: string=, permitWordHashes: boolean=}=}
+	 * @param options {{emojiRoot: string=, hashPrefix: string=, permitWordHashes: boolean=, modes: string='JS_MD'}=}
 	 */
 	static resetSharedState(options) {
 		ARLexer.SHARED_STATE = {
+			mode: (options && options.mode) || MODES.JS_MD,
 			urls: [],
 			titleAnchors: [],
 			listLevel: 0,

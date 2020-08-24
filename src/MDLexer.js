@@ -6,12 +6,13 @@ const ARLexer = require('./ARLexer');
 const Normalizer = require('./Normalizer');
 const Safeguard = require('./Safeguard');
 const Sanitizer = require('./Sanitizer');
+const MODES = require('./Modes');
 
 
 class MDLexer {
 	/**
 	 * @param options {{
-	 * 		vanilla: boolean=,
+	 * 		mode: string='JS_MD',
 	 * 		emojiRoot: string=,
 	 * 		hashPrefix: string=,
 	 * 		permitWordHashes: boolean=,
@@ -23,18 +24,18 @@ class MDLexer {
 		if (!options)
 			options = {};
 
-		this._vanilla = !!options.vanilla;
-
 		this._options = {
 			hashPrefix: options.hashPrefix,
 			emojiRoot: options.emojiRoot,
 			permitWordHashes: options.permitWordHashes,
 
 			// default to false
-			failOnUnsafeTags: options.failOnUnsafeTags || false,
+			failOnUnsafeTags: !!options.failOnUnsafeTags,
 
 			// default to true
-			escapeUnsafeTags: options.escapeUnsafeTags && true
+			escapeUnsafeTags: options.escapeUnsafeTags || true,
+
+			mode: options.mode || MDLexer.MODES.JS_MD
 		};
 
 		/**
@@ -114,9 +115,12 @@ class MDLexer {
 	 * Resets the lexers to the defaults for the mode the lexer is in -- vanilla or custom
 	 */
 	resetLexers() {
-		if (this._vanilla) {
+		if (this._options.mode === MDLexer.MODES.COMMON_MARK) {
 			this._inlineLexers = RInlineLexers.vanilla.slice();
 			this._blockLexers = RBlockLexers.vanilla.slice();
+		} else if (this._options.mode === MDLexer.MODES.GFM) {
+			this._inlineLexers = RInlineLexers.gfm.slice();
+			this._blockLexers = RBlockLexers.gfm.slice();
 		} else {
 			this._inlineLexers = RInlineLexers.defaults.slice();
 			this._blockLexers = RBlockLexers.defaults.slice();
@@ -142,10 +146,10 @@ class MDLexer {
 	/**
 	 * Set the mode of the lexer - 'vanilla' gives only bare minimum (CommonMark) lexing support, default gives
 	 * extended syntax (similar to github flavored markdown)
-	 * @param mode {'vanilla'|'default'}
+	 * @param mode {'cm'|'default'}
 	 */
 	setMode(mode) {
-		this._vanilla = mode === MDLexer.MODES.VANILLA;
+		this._options.mode = mode === MDLexer.MODES.JS_MD;
 		this.resetLexers();
 	}
 
@@ -210,12 +214,7 @@ class MDLexer {
 	}
 }
 
-MDLexer.MODES = {
-	VANILLA: 'vanilla',
-	DEFAULT: 'default',
+MDLexer.MODES = MODES;
 
-	// experimental - maybe will support... someday... tables are hard
-	GFM: 'gfm'
-};
 
 module.exports = MDLexer;

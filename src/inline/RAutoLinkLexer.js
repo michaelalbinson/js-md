@@ -18,7 +18,7 @@ const ARLexer = require('../ARLexer');
  * or
  * <a href="https://michael.albinson.ca">https://michael.albinson.ca</a>
  */
-class RAutoLinkLexer extends ARLexer{
+class RAutoLinkLexer extends ARLexer {
     static apply(text) {
         // capture links starting with http:// or https://
         text = text.replace(/(http[s]?:\/\/)([a-zA-Z0-9_]+\.)+([a-zA-Z0-9_]+)(\/[a-zA-Z0-9_?!.:*~+=()]+)*[^[?!.:*_~]]?/gi, match => {
