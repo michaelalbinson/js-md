@@ -8,9 +8,9 @@ const ARLexer = require('../ARLexer');
  */
 class RHRLexer extends ARLexer {
 	static apply(text) {
-		text = text.replace(/^[ ]{0,3}\*[* ]{2,}[ \t]*$/gim, RHRLexer._asteriskMatcher);
-		text = text.replace(/^[ ]{0,3}_[_ ]{2,}[ \t]*$/gim, RHRLexer._underscoreMatcher);
-		return text.replace(/^[ ]{0,3}-[- ]{2,}[ \t]*$/gim, RHRLexer._dashMatcher);
+		text = text.replace(/^[ ]{0,3}\*[* \t]{2,}$/gim, RHRLexer._asteriskMatcher);
+		text = text.replace(/^[ ]{0,3}_[_ \t]{2,}$/gim, RHRLexer._underscoreMatcher);
+		return text.replace(/^[ ]{0,3}-[- \t]{2,}$/gim, RHRLexer._dashMatcher);
 	}
 
 	static _asteriskMatcher(match) {

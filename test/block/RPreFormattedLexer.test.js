@@ -6,12 +6,12 @@ const RPreFormattedLexer = require('../../src/block/RPreFormattedLexer');
 
 
 describe('RPreFormattedLexer', () => {
-	describe('#apply', () => {
-		const assertOutput = (input, expected) => {
-			const result = RPreFormattedLexer.apply(input);
-			expect(result).to.equal(expected);
-		};
+	const assertOutput = (input, expected) => {
+		const result = RPreFormattedLexer.apply(input);
+		expect(result).to.equal(expected);
+	};
 
+	describe('#apply', () => {
 		it('should successfully parse', () => {
 			const input = '```hello\nworld```';
 			const output = '<pre>hello&#10;world</pre>';
@@ -27,6 +27,21 @@ describe('RPreFormattedLexer', () => {
 		it('should not parse single or double code ticked blocks', () => {
 			const input = '``test`` `test2`';
 			assertOutput(input, input);
+		});
+	});
+
+	describe('4.5 Fenced code blocks (examples 89 - 117)', () => {
+		it('example 89', () => {
+			assertOutput(
+				'```\n' +
+				'<\n' +
+				' >\n' +
+				'```',
+
+				'<pre><code>&lt;\n' +
+				' &gt;\n' +
+				'</code></pre>'
+			);
 		});
 	});
 });

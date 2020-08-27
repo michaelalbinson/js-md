@@ -114,16 +114,16 @@ describe('MDLexer', () => {
             const lexer = new MDLexer();
             expect(lexer.getInlineLexers()).deep.to.equal(RInlineLexers.defaults);
             expect(lexer.getBlockLexers()).deep.to.equal(RBlockLexers.defaults);
-            lexer.setMode(MDLexer.MODES.VANILLA);
-            expect(lexer.getInlineLexers()).to.deep.equal(RInlineLexers.vanilla);
-            expect(lexer.getBlockLexers()).to.deep.equal(RBlockLexers.vanilla);
+            lexer.setMode(MDLexer.MODES.COMMON_MARK);
+            expect(lexer.getInlineLexers()).to.deep.equal(RInlineLexers.cm);
+            expect(lexer.getBlockLexers()).to.deep.equal(RBlockLexers.cm);
         });
 
         it('should set the mode to \'default\'', () => {
             const lexer = new MDLexer();
             expect(lexer.getInlineLexers()).deep.to.equal(RInlineLexers.defaults);
             expect(lexer.getBlockLexers()).deep.to.equal(RBlockLexers.defaults);
-            lexer.setMode(MDLexer.MODES.DEFAULT);
+            lexer.setMode(MDLexer.MODES.JS_MD);
             expect(lexer.getInlineLexers()).deep.to.equal(RInlineLexers.defaults);
             expect(lexer.getBlockLexers()).deep.to.equal(RBlockLexers.defaults);
         });
@@ -135,9 +135,9 @@ describe('MDLexer', () => {
         });
 
         it('should set the mode to \'vanilla\' if it is specified in the constructor', () => {
-            const lexer = new MDLexer({ vanilla: true });
-            expect(lexer.getInlineLexers()).deep.to.equal(RInlineLexers.vanilla);
-            expect(lexer.getBlockLexers()).deep.to.equal(RBlockLexers.vanilla);
+            const lexer = new MDLexer({ mode: MDLexer.MODES.COMMON_MARK });
+            expect(lexer.getInlineLexers()).deep.to.equal(RInlineLexers.cm);
+            expect(lexer.getBlockLexers()).deep.to.equal(RBlockLexers.cm);
         });
     });
 
@@ -161,17 +161,17 @@ describe('MDLexer', () => {
         it('should reset the lexers back to the vanilla defaults', () => {
             class TestLexer { }
 
-            const lexer = new MDLexer({ vanilla: true });
-            expect(lexer.getInlineLexers()).deep.to.equal(RInlineLexers.vanilla);
-            expect(lexer.getBlockLexers()).deep.to.equal(RBlockLexers.vanilla);
+            const lexer = new MDLexer({ mode: MDLexer.MODES.COMMON_MARK });
+            expect(lexer.getInlineLexers()).deep.to.equal(RInlineLexers.cm);
+            expect(lexer.getBlockLexers()).deep.to.equal(RBlockLexers.cm);
 
             lexer.addInlineLexer(TestLexer);
             lexer.addBlockLexer(TestLexer);
 
             lexer.resetLexers();
 
-            expect(lexer.getInlineLexers()).deep.to.equal(RInlineLexers.vanilla);
-            expect(lexer.getBlockLexers()).deep.to.equal(RBlockLexers.vanilla);
+            expect(lexer.getInlineLexers()).deep.to.equal(RInlineLexers.cm);
+            expect(lexer.getBlockLexers()).deep.to.equal(RBlockLexers.cm);
         });
     });
 

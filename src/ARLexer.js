@@ -24,7 +24,7 @@ class ARLexer {
 	 * @return {string}
 	 */
 	static escapeHTMLEntities(str) {
-		return str.replace(/[\x26\x0A<>'"*_\[\]]/g, foundChar => {
+		return str.replace(/[\x26<>'"*_\[\]]/g, foundChar => {
 			if (foundChar in ARLexer.ENTITY_MAP)
 				return ARLexer.ENTITY_MAP[foundChar];
 

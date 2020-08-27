@@ -11,6 +11,9 @@ const RPreFormattedLexer = require('./RPreFormattedLexer');
 const RUnorderedListLexer = require('./RUnorderedListLexer');
 
 
+const COMMON_MARK = [RHeaderLexer, RHRLexer, ROrderedListLexer, RUnorderedListLexer, RPreFormattedLexer, RBlockQuoteLexer, RParagraphLexer];
+
+
 module.exports = {
 	ARBlockLexer,
 	RBlockQuoteLexer,
@@ -21,7 +24,7 @@ module.exports = {
 	RParagraphLexer,
 	RPreFormattedLexer,
 	RUnorderedListLexer,
-	defaults: [ROrderedListLexer, RUnorderedListLexer, RPreFormattedLexer, RBlockQuoteLexer, RHeaderLexer, RHRLexer, RParagraphLexer],
-	vanilla: [ROrderedListLexer, RUnorderedListLexer, RPreFormattedLexer, RBlockQuoteLexer, RHeaderLexer, RHRLexer, RParagraphLexer],
-	gfm: [ROrderedListLexer, RUnorderedListLexer, RPreFormattedLexer, RBlockQuoteLexer, RHeaderLexer, RHRLexer, RParagraphLexer]
+	defaults: COMMON_MARK.slice(),
+	cm: COMMON_MARK.slice(),
+	gfm: COMMON_MARK.slice()
 };

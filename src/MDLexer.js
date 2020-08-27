@@ -116,8 +116,8 @@ class MDLexer {
 	 */
 	resetLexers() {
 		if (this._options.mode === MDLexer.MODES.COMMON_MARK) {
-			this._inlineLexers = RInlineLexers.vanilla.slice();
-			this._blockLexers = RBlockLexers.vanilla.slice();
+			this._inlineLexers = RInlineLexers.cm.slice();
+			this._blockLexers = RBlockLexers.cm.slice();
 		} else if (this._options.mode === MDLexer.MODES.GFM) {
 			this._inlineLexers = RInlineLexers.gfm.slice();
 			this._blockLexers = RBlockLexers.gfm.slice();
@@ -146,10 +146,10 @@ class MDLexer {
 	/**
 	 * Set the mode of the lexer - 'vanilla' gives only bare minimum (CommonMark) lexing support, default gives
 	 * extended syntax (similar to github flavored markdown)
-	 * @param mode {'cm'|'default'}
+	 * @param mode {'cm'|'js_md'|'gfm'}
 	 */
 	setMode(mode) {
-		this._options.mode = mode === MDLexer.MODES.JS_MD;
+		this._options.mode = mode;
 		this.resetLexers();
 	}
 
