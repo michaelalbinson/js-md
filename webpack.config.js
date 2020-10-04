@@ -8,7 +8,7 @@ module.exports = [
 ].map(devtool => ({
     entry: './src/index.js',
     output: {
-        filename: 'main.js',
+        filename: 'js-md-bundle.js',
         path: path.resolve(__dirname, 'dist'),
         library: 'js_md'
     },
